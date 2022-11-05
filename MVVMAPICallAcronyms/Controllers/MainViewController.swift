@@ -8,21 +8,40 @@
 import UIKit
 
 class MainViewController: UIViewController {
-
+    
+    let array = ["Mike Tyson","Oscar De La Hoya","Felix Trinidad"]
+    
+    @IBOutlet weak var testSearchField: UITextField!
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Hello World 233")
+        tableView.delegate = self
+        tableView.dataSource = self
         
-        NetworkingService.shared.fetchAPIResponse(url: URL(string: "http://www.nactem.ac.uk/software/acromine/dictionary.py?sf=wa")!) { result in
-            switch result {
-            case .failure(let err):
-                print("Error: \(err)")
-            case .success(let data):
-                print("Data: \(data)")
-            }
-        }
+        
     }
 
+    @IBAction func submitButtonTapped(_ sender: UIButton) {
+        
+    }
+    
+}
 
+extension MainViewController:UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return array.count 
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
+        cell?.textLabel?.text = array[indexPath.row]
+        return cell!
+    }
+    
+    
+    
+    
 }
 

@@ -45,6 +45,7 @@ class MainViewModel {
                     funcList.append(item.lf)
                 }
                 self.list.value = funcList
+                print("funcList:\(funcList)")
                 completion(.success(true))
             }
         }

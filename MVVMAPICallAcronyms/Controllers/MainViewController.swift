@@ -12,18 +12,20 @@ class MainViewController: UIViewController {
     @IBOutlet weak var testSearchField: UITextField!
     @IBOutlet weak var tableView: UITableView!
     
-    var viewModel = MainViewModel()
+   
+    var array = ["California", "Texas","Oklahoma", "Hawaii", "Arizona", "Main", "New York"]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        setupBindings()
+        
         
     }
 
     @IBAction func submitButtonTapped(_ sender: UIButton) {
-        viewModel.populateTableView(input: testSearchField.text)
+        
     }
     
 }
@@ -31,12 +33,12 @@ class MainViewController: UIViewController {
 extension MainViewController:UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.list.value.count
+        return array.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-        cell?.textLabel?.text = viewModel.list.value[indexPath.row]
+        cell?.textLabel?.text = array[indexPath.row]
         return cell!
     }
     
@@ -45,18 +47,5 @@ extension MainViewController:UITableViewDelegate, UITableViewDataSource {
     
 }
 
-// Databinding
-extension MainViewController {
-    
-    private func setupBindings() {
-        viewModel.list.bind { [weak self] list in
-            
-            DispatchQueue.main.async {
-                guard let strongSelf = self else {return}
-                strongSelf.tableView.reloadData()
-            }
-        }
-    }
-    
-}
+
 
